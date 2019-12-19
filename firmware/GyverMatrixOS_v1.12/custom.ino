@@ -62,16 +62,18 @@
 //  break;
 
 // не забудьте указать количество режимов для корректного переключения с последнего на первый
-#define MODES_AMOUNT 28   // количество кастомных режимов (которые переключаются сами или кнопкой)
+#define MODES_AMOUNT 27   // количество кастомных режимов (которые переключаются сами или кнопкой)
 
 void customModes() {
+  //Serial.print("thisMode: ");
+  //Serial.println(thisMode);
   switch (thisMode) {
 
     case 0: fillString("КРАСНЫЙ", CRGB::Red);
       break;
-    case 1: fillString("РАДУГА", 1);
+    case 1: fillString("RGB LED", 2);
       break;
-    case 2: fillString("RGB LED", 2);
+    case 2: fillString("С НОВЫМ ГОДОМ!", 1);
       break;
     case 3: madnessNoise();
       break;
@@ -327,6 +329,10 @@ void timeSet(boolean type, boolean dir) {    // type: 0-часы, 1-минуты
 void btnsModeChange() {
 #if (USE_BUTTONS == 1)
   if (bt_set.clicked()) {
+    //Serial.println("bt_set.clicked");
+    AUTOPLAY = false;
+    nextMode();
+    /*
     if (gamemodeFlag) gameDemo = !gameDemo;
     if (gameDemo) {
       gameSpeed = DEMO_GAME_SPEED;
@@ -337,8 +343,12 @@ void btnsModeChange() {
       gameTimer.setInterval(gameSpeed);
       AUTOPLAY = false;
     }
+    */
   }
   if (bt_set.holded()) {
+    //Serial.println("bt_set.holded");
+    AUTOPLAY = !AUTOPLAY;
+    /*
     if (modeCode == 2)
       mazeMode = !mazeMode;
     if (modeCode == 1) {    // вход в настройку часов
@@ -348,7 +358,7 @@ void btnsModeChange() {
 #if (USE_CLOCK == 1)
       if (!clockSet) rtc.adjust(DateTime(2014, 1, 21, hrs, mins, 0)); // установка нового времени в RTC
 #endif
-    }
+    }*/
   }
 
   // timeSet type: 0-часы, 1-минуты, dir: 0-уменьшить, 1-увеличить
